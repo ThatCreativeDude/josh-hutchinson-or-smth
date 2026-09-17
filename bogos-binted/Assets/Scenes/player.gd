@@ -20,13 +20,15 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 		
 	if Input.is_action_just_pressed("Action"):
-		is_punching = true
-		if punch_number == 1:
+		if punch_number == 1 and !is_punching:
 			animation_player.play("Punch")
 			punch_number = 2
-		else:
+		elif punch_number != 1 and !is_punching:
 			animation_player.play("Punch_2")
 			punch_number = 1
+		is_punching = true
+		await get_tree().create_timer(0.2).timeout
+		is_punching = false
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("Left","Right")
