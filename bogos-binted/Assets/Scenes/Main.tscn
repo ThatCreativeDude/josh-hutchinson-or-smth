@@ -1,12 +1,17 @@
 [gd_scene format=3 uid="uid://breilaf5v8dsd"]
 
+[ext_resource type="PackedScene" uid="uid://uqth1kqy5mxk" path="res://Assets/Scenes/Enemy.tscn" id="1_2qpql"]
 [ext_resource type="PackedScene" uid="uid://dkm58g3gck4pe" path="res://Assets/Scenes/Player.tscn" id="1_kwblh"]
 [ext_resource type="Texture2D" uid="uid://bhwc7v4ivnfmo" path="res://Assets/Sprites/icon.svg" id="1_wkehv"]
+[ext_resource type="Script" uid="uid://cmk4fclbn14dc" path="res://Assets/Scenes/CamCont.gd" id="2_ygaiq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mxjbx"]
 size = Vector2(1949, 125)
 
 [node name="Node2D" type="Node2D" unique_id=1448645734]
+
+[node name="Enemy" parent="." unique_id=85846954 groups=["enemies"] instance=ExtResource("1_2qpql")]
+position = Vector2(96, 188)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=85727787]
 
@@ -16,10 +21,16 @@ scale = Vector2(15.1953125, 1)
 texture = ExtResource("1_wkehv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1245749079]
-position = Vector2(7.5, 272.5)
+position = Vector2(12, 275)
 shape = SubResource("RectangleShape2D_mxjbx")
 
-[node name="CharacterBody2D" parent="." unique_id=85846954 instance=ExtResource("1_kwblh")]
-SPEED = 750
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1001592250]
+zoom = Vector2(1.475, 1.475)
+script = ExtResource("2_ygaiq")
+speedX = 14
+speedY = 3
+
+[node name="player" parent="." unique_id=90483618 groups=["player"] instance=ExtResource("1_kwblh")]
+position = Vector2(0, 188)
 JUMP_VELOCITY = -640.0
 gravityMultiplier = 2.0

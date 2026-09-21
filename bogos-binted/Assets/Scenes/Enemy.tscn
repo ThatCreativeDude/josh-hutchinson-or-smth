@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://uqth1kqy5mxk"]
+
+[ext_resource type="Script" uid="uid://djpp34ivkm25l" path="res://Assets/Scenes/enemy.gd" id="1_3pmh0"]
+[ext_resource type="Texture2D" uid="uid://b86rciqvpv3o5" path="res://Assets/Sprites/player/player-spritemap-v9-redpants.png" id="2_3pmh0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aee6e"]
+radius = 8.0
+height = 46.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct8q6"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(92, 0, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jebe6"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(138, 0, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kuhgf"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(184, 0, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1aat"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(230, 0, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pmh0"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(0, 50, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_td1d5"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(0, 0, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftyeq"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(0, 150, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36hpo"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(46, 150, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vd0nm"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(92, 150, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nf7p"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(138, 150, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twsn0"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(184, 150, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8gsn"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(230, 150, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_waoeb"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(276, 150, 46, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03yfc"]
+atlas = ExtResource("2_3pmh0")
+region = Rect2(322, 150, 46, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mxjbx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct8q6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jebe6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kuhgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1aat")
+}],
+"loop": 0,
+"name": &"Hit",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pmh0")
+}],
+"loop": 1,
+"name": &"Hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_td1d5")
+}],
+"loop": 0,
+"name": &"Idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftyeq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36hpo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vd0nm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nf7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twsn0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8gsn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_waoeb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03yfc")
+}],
+"loop": 1,
+"name": &"Run",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxjbx"]
+size = Vector2(24, 31)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=85846954]
+script = ExtResource("1_3pmh0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=542623828]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_aee6e")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1937025602]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_mxjbx")
+animation = &"Hit"
+autoplay = "Idle"
+
+[node name="PunchHitbox" type="Area2D" parent="." unique_id=120706150]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PunchHitbox" unique_id=802702159]
+position = Vector2(16, -2.5)
+shape = SubResource("RectangleShape2D_mxjbx")
+disabled = true
