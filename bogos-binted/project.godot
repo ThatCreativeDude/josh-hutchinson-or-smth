@@ -60,3 +60,4 @@ Action={
 
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.35886183, 0.6529923, 0.9491499, 1)

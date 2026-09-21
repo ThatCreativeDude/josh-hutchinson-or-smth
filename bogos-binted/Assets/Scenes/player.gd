@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var JUMP_VELOCITY = -400.0
 @export var gravityMultiplier = 1.2
 @export var health = 5
-@export var punch_offset_x = 20.0
+@export var punch_offset_x = 25.0
 
 @onready var animation_player: AnimatedSprite2D = $Sprite
 @onready var punch_hitbox: Area2D = $PunchHitbox
@@ -16,9 +16,7 @@ var punch_count = 1
 
 
 func _ready() -> void:
-	punch_hitbox.monitoring = false
-	if not punch_hitbox.body_entered.is_connected(_on_punch_hitbox_body_entered):
-		punch_hitbox.body_entered.connect(_on_punch_hitbox_body_entered)
+	punch_hitbox.monitoring = true
 
 
 func _physics_process(delta: float) -> void:
@@ -36,20 +34,17 @@ func _physics_process(delta: float) -> void:
 			velocity.x = 0
 			animation_player.play("Hit")
 
-			punch_hitbox.monitoring = true
-			check_punch_hits()
+			deal_punch_damage()
 
-			await get_tree().create_timer(0.1).timeout
-
-			punch_hitbox.monitoring = false
-			await get_tree().create_timer(0.1).timeout
-
+			await get_tree().create_timer(0.2).timeout
 			is_punching = false
 
 		elif Input.is_action_just_pressed("Action") and not is_on_floor() and punch_count > 0:
 			is_pounding = true
 			velocity.x = 0
 			animation_player.play("Pound")
+
+			deal_punch_damage()
 
 			await get_tree().create_timer(0.2).timeout
 
@@ -83,19 +78,38 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func check_punch_hits() -> void:
-	for body in punch_hitbox.get_overlapping_bodies():
-		_on_punch_hitbox_body_entered(body)
+func deal_punch_damage() -> void:
+	var hit_registered = false
 
+	if is_instance_valid(punch_hitbox):
+		var overlapping = punch_hitbox.get_overlapping_bodies() + punch_hitbox.get_overlapping_areas()
+		for target in overlapping:
+			var node = target
+			if node == self:
+				continue
+			if not node.has_method("take_damage") and node.get_parent() and node.get_parent().has_method("take_damage"):
+				node = node.get_parent()
 
-func _on_punch_hitbox_body_entered(body: Node2D) -> void:
-	if body != self and body.is_in_group("enemies"):
-		if body.has_method("take_damage"):
-			body.take_damage()
+			if node != self and node.has_method("take_damage"):
+				node.take_damage()
+				hit_registered = true
+
+	if not hit_registered:
+		var facing_dir = -1.0 if animation_player.flip_h else 1.0
+		var nodes = get_tree().get_nodes_in_group("enemies")
+		if nodes.is_empty() and get_parent():
+			nodes = get_parent().get_children()
+
+		for node in nodes:
+			if node != self and node.has_method("take_damage"):
+				var x_dist = (node.global_position.x - global_position.x) * facing_dir
+				var y_dist = abs(node.global_position.y - global_position.y)
+				if x_dist >= -10.0 and x_dist <= 70.0 and y_dist < 50.0:
+					node.take_damage()
 
 
 func take_damage(amount: int = 1) -> void:
-	if is_hurt:
+	if is_hurt or is_punching or is_pounding:
 		return
 
 	health -= amount
