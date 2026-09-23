@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dkm58g3gck4pe"]
 
-[ext_resource type="Script" uid="uid://1syh2rjnfkg5" path="res://Assets/Scenes/player.gd" id="1_b2ifw"]
+[ext_resource type="Script" uid="uid://1syh2rjnfkg5" path="res://Assets/Script/player.gd" id="1_b2ifw"]
 [ext_resource type="Texture2D" uid="uid://cnt1bpfs5om88" path="res://Assets/Sprites/player/player-spritemap-v9-greypants.png" id="2_b2ifw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aee6e"]
@@ -186,7 +186,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mxjbx"]
-size = Vector2(31, 31)
+size = Vector2(26.5, 31)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=85846954]
 script = ExtResource("1_b2ifw")
@@ -204,8 +204,9 @@ animation = &"Hit"
 autoplay = "Idle"
 
 [node name="PunchHitbox" type="Area2D" parent="." unique_id=120706150]
-position = Vector2(24, 0)
+position = Vector2(15, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PunchHitbox" unique_id=802702159]
+scale = Vector2(0.69165576, -1.6616906)
 shape = SubResource("RectangleShape2D_mxjbx")
 disabled = true

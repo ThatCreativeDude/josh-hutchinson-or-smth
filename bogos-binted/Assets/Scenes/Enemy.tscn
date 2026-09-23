@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://uqth1kqy5mxk"]
 
-[ext_resource type="Script" uid="uid://djpp34ivkm25l" path="res://Assets/Scenes/enemy.gd" id="1_3pmh0"]
+[ext_resource type="Script" uid="uid://djpp34ivkm25l" path="res://Assets/Script/enemy.gd" id="1_3pmh0"]
 [ext_resource type="Texture2D" uid="uid://b86rciqvpv3o5" path="res://Assets/Sprites/player/player-spritemap-v9-redpants.png" id="2_3pmh0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aee6e"]
